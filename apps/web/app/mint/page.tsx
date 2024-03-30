@@ -4,14 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
-import { Address } from 'viem'
-import { polygon } from 'viem/chains'
-import {
-  useAccount,
-  useSimulateContract,
-  useWalletClient,
-  useWriteContract,
-} from 'wagmi'
+import { Address, createWalletClient, custom, http, WalletClient } from 'viem'
+import { polygon, polygonMumbai } from 'viem/chains'
+import { useAccount, useSimulateContract, useWriteContract } from 'wagmi'
 
 import { OwnedNft } from '@/types/nfts'
 import { alchemy } from '@/lib/alchemy'
@@ -25,6 +20,12 @@ import { NameForm } from '@/components/name-form'
 import { Navbar } from '@/components/navbar'
 import { PFPassport } from '@/components/pfpassport'
 import { Stepper } from '@/components/stepper'
+
+declare global {
+  interface Window {
+    ethereum?: any
+  }
+}
 
 type TBAccountParams = {
   tokenContract: `0x${string}`
@@ -46,8 +47,16 @@ export default function MintPage() {
   const [selectedNft, setSelectedNft] = useState<OwnedNft | undefined>()
   const [step, setStep] = useState(STEPS.ANIMATE)
 
-  const { data: walletClient, isError, isLoading } = useWalletClient()
-  const tokenboundClient = new TokenboundClient({ chainId: polygon.id })
+  const walletClient = createWalletClient({
+    chain: process.env.NODE_ENV === 'development' ? polygonMumbai : polygon,
+    account: address,
+    transport: window['ethereum'] ? custom(window['ethereum']) : http(),
+  })
+  const tokenboundClient = new TokenboundClient({
+    walletClient: walletClient as any,
+    chainId:
+      process.env.NODE_ENV === 'development' ? polygonMumbai.id : polygon.id,
+  })
 
   const [tokenAccount, setTokenAccount] = useState<string>('')
 

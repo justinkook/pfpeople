@@ -20,7 +20,7 @@ export const wagmiConfig = createConfig(
   getDefaultConfig({
     chains: [mainnet, polygon, optimism, arbitrum, polygonMumbai],
     // Required API Keys
-    walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID!,
+    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
 
     // Required
     appName: 'PFPeople',
