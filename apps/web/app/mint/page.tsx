@@ -21,12 +21,6 @@ import { Navbar } from '@/components/navbar'
 import { PFPassport } from '@/components/pfpassport'
 import { Stepper } from '@/components/stepper'
 
-declare global {
-  interface Window {
-    ethereum?: any
-  }
-}
-
 type TBAccountParams = {
   tokenContract: `0x${string}`
   tokenId: string
@@ -50,7 +44,10 @@ export default function MintPage() {
   const walletClient = createWalletClient({
     chain: process.env.NODE_ENV === 'development' ? polygonMumbai : polygon,
     account: address,
-    transport: window['ethereum'] ? custom(window['ethereum']) : http(),
+    transport:
+      process.env.NODE_ENV === 'development'
+        ? http('https://polygon-mumbai-bor-rpc.publicnode.com')
+        : http('https://rpc-mainnet.matic.quiknode.pro'),
   })
   const tokenboundClient = new TokenboundClient({
     walletClient: walletClient as any,
