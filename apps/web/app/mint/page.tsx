@@ -39,6 +39,7 @@ export default function MintPage() {
   const { address } = useAccount()
   const [nfts, setNfts] = useState<OwnedNft[]>([])
   const [selectedNft, setSelectedNft] = useState<OwnedNft | undefined>()
+  const [lensHandle, setLensHandle] = useState<string>('')
   const [step, setStep] = useState(STEPS.ANIMATE)
 
   const walletClient = createWalletClient({
@@ -97,7 +98,10 @@ export default function MintPage() {
     setStep((value) => value - 1)
   }, [])
 
-  const onNext = useCallback(() => {
+  const onNext = useCallback((handle?: string) => {
+    if (step === STEPS.NAME && handle) {
+      setLensHandle(handle)
+    }
     setStep((value) => value + 1)
   }, [])
 
@@ -263,7 +267,7 @@ export default function MintPage() {
                     variant="link"
                     className="uppercase font-extrabold text-5xl p-2"
                   >
-                    Mira!
+                    {lensHandle}!
                   </Button>
                 </h1>
               </div>

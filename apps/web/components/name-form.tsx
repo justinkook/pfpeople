@@ -38,7 +38,7 @@ type NameFormProps = {
   tokenAccount: string
   actionLabel: string
   secondaryActionLabel: string
-  onNext: () => void
+  onNext: (handle?: string) => void
   onBack: () => void
 }
 
@@ -142,18 +142,21 @@ export const NameForm: React.FC<NameFormProps> = ({
           variant: 'destructive',
         })
       }
-      await writeContractAsync({
-        abi: HANDLE_CREATOR_ABI,
-        address:
-          process.env.NODE_ENV === 'production'
-            ? LENS_PROFILE_CONTRACT_ADDRESS
-            : LENS_PROFILE_MUMBAI_CONTRACT_ADDRESS,
-        args: [[tokenAccount, ZERO_ADDRESS, '0x'], handle, [delegatedExecutor]],
-        functionName: 'createProfileWithHandleUsingCredits',
-      })
+      // await writeContractAsync({
+      //   abi: HANDLE_CREATOR_ABI,
+      //   address:
+      //     process.env.NODE_ENV === 'production'
+      //       ? LENS_PROFILE_CONTRACT_ADDRESS
+      //       : LENS_PROFILE_MUMBAI_CONTRACT_ADDRESS,
+      //   args: [[tokenAccount, ZERO_ADDRESS, '0x'], handle, [delegatedExecutor]],
+      //   functionName: 'createProfileWithHandleUsingCredits',
+      // })
 
+      toast({
+        title: 'Your profile has been successfully created',
+      })
       setCreating(false)
-      onNext()
+      onNext(data.handle)
     } catch {
       setCreating(false)
     }
