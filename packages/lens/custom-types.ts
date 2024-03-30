@@ -7,7 +7,7 @@ import type {
   ProfileInterestTypes,
   RecipientDataInput,
   SimpleCollectOpenActionSettings
-} from '@pfpeople/lens'
+} from './generated'
 
 export type IrysDataState = {
   instance: WebIrys | null
