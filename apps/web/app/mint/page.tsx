@@ -99,7 +99,7 @@ export default function MintPage() {
   }, [])
 
   const onNext = useCallback((handle?: string) => {
-    if (step === STEPS.NAME && handle) {
+    if (handle) {
       setLensHandle(handle)
     }
     setStep((value) => value + 1)
