@@ -19,5 +19,3 @@ export const COMMON_REGEX = {
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 export const LENS_NAMESPACE_PREFIX =
   process.env.NODE_ENV === 'production' ? 'lens/' : 'test/'
-
-export const POLYGON_CHAIN_ID = 137

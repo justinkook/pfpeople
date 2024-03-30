@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['@pfpeople/lens'],
   images: {
     domains: ['media.giphy.com'],
   },

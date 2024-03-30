@@ -1,5 +1,6 @@
 'use client'
 
+import { apolloClient, ApolloProvider } from '@pfpeople/lens/apollo'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import { createConfig, WagmiProvider } from 'wagmi'
@@ -37,14 +38,16 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
       <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          <ConnectKitProvider>
-            <TooltipProvider>
-              {children}
-              <Toaster />
-            </TooltipProvider>
-          </ConnectKitProvider>
-        </QueryClientProvider>
+        <ApolloProvider client={apolloClient()}>
+          <QueryClientProvider client={queryClient}>
+            <ConnectKitProvider>
+              <TooltipProvider>
+                {children}
+                <Toaster />
+              </TooltipProvider>
+            </ConnectKitProvider>
+          </QueryClientProvider>
+        </ApolloProvider>
       </WagmiProvider>
     </ThemeProvider>
   )

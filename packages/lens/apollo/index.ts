@@ -14,8 +14,8 @@ import {
   useQuery
 } from '@apollo/client'
 import { RetryLink } from '@apollo/client/link/retry'
-import { LENS_API_URL } from '@tape.xyz/constants'
 
+const LENS_API_URL = 'https://api-v2.lens.dev/'
 import cache from './cache'
 
 const retryLink = new RetryLink({

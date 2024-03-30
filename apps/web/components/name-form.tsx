@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   useGenerateLensApiRelayAddressQuery,
   useHandleToAddressLazyQuery,
-  useProfileLazyQuery,
 } from '@pfpeople/lens'
 import { ArrowBottomRightIcon } from '@radix-ui/react-icons'
 import { useForm } from 'react-hook-form'

@@ -1,6 +1,5 @@
+import { polygon } from 'viem/chains'
 import { useConnections, useSwitchChain } from 'wagmi'
-
-import { POLYGON_CHAIN_ID } from '@/lib/constants'
 
 const useHandleWrongNetwork = () => {
   const activeConnection = useConnections()
@@ -8,8 +7,8 @@ const useHandleWrongNetwork = () => {
 
   const handleWrongNetwork = async () => {
     const activeChainId = activeConnection?.[0]?.chainId
-    if (activeChainId !== POLYGON_CHAIN_ID) {
-      return await switchChainAsync({ chainId: POLYGON_CHAIN_ID })
+    if (activeChainId !== polygon.id) {
+      return await switchChainAsync({ chainId: polygon.id })
     }
 
     return

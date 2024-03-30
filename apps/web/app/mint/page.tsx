@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
 import { Address } from 'viem'
+import { polygon } from 'viem/chains'
 import {
   useAccount,
   useSimulateContract,
@@ -46,7 +47,7 @@ export default function MintPage() {
   const [step, setStep] = useState(STEPS.ANIMATE)
 
   const { data: walletClient, isError, isLoading } = useWalletClient()
-  const tokenboundClient = new TokenboundClient({})
+  const tokenboundClient = new TokenboundClient({ chainId: polygon.id })
 
   const [tokenAccount, setTokenAccount] = useState<string>('')
 
@@ -192,7 +193,7 @@ export default function MintPage() {
               </span>
             </div>
             <NameForm
-            tokenAccount={tokenAccount}
+              tokenAccount={tokenAccount}
               actionLabel={actionLabel}
               secondaryActionLabel={secondaryActionLabel}
               onNext={onNext}
