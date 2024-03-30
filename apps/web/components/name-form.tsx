@@ -18,7 +18,7 @@ import {
   LENS_PROFILE_MUMBAI_CONTRACT_ADDRESS,
   ZERO_ADDRESS,
 } from '@/lib/constants'
-import * as HANDLE_CREATOR_ABI from '@/lib/contracts/abis/handle-creator.json'
+import { HANDLE_CREATOR_ABI } from '@/lib/contracts/abis/handle-creator'
 import { useDebounce } from '@/hooks/use-debounce'
 import useHandleWrongNetwork from '@/hooks/use-handle-wrong-network'
 import { Button } from '@/components/ui/button'
@@ -32,8 +32,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { toast } from './ui/use-toast'
+import { toast } from '@/components/ui/use-toast'
 
 type NameFormProps = {
   tokenAccount: string
