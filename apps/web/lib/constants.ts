@@ -1,8 +1,8 @@
 export const LENS_PROFILE_MUMBAI_CONTRACT_ADDRESS =
-  '0x634a97C51AB50BAA273d9Fe0154b325cBe5e2191'
+  '0x65dCba4Df48f71A8b7Cc0F7ab4E5144208Cf7fBf'
 
 export const LENS_PROFILE_CONTRACT_ADDRESS =
-  '0xD9591A72365bE5102397F3342f0b70195ef2BE1A'
+  '0xbCB51B779a770a9a21136a5AcB183685E01d2388'
 
 export const COMMON_REGEX = {
   ZORA: /https:\/\/(?:testnet\.)?zora\.co\/collect\/(eth|oeth|base|zora|gor|ogor|basegor|zgor):(0x[\dA-Fa-f]{40})((?:\/(\d+))?|$)/,
