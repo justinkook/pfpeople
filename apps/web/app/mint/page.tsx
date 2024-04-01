@@ -4,16 +4,25 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
+import { ethers } from 'ethers'
 import { Address } from 'viem'
 import { mainnet } from 'viem/chains'
-import { useAccount, useSimulateContract, useWriteContract } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { OwnedNft } from '@/types/nfts'
 import { alchemy } from '@/lib/alchemy'
+import {
+  PFPASSPORT_TESTNET_CONTRACT_ADDRESS,
+  PFPASSPORT_TOKEN_URI,
+} from '@/lib/constants'
 import * as pfpassportAbi from '@/lib/contracts/abis/pfpassport.json'
+import { Pfpassport } from '@/lib/contracts/types'
+import { mintPFPassportWithMintingFee } from '@/lib/pfpassport-mint'
 import { cn } from '@/lib/utils'
+import useHandleWrongNetwork from '@/hooks/use-handle-wrong-network'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
 import { AnimateCard } from '@/components/animate-card'
 import { onTransactionSubmitted } from '@/components/etherscan-transaction'
 import { NameForm } from '@/components/name-form'
@@ -34,6 +43,7 @@ export default function MintPage() {
   const [selectedNft, setSelectedNft] = useState<OwnedNft | undefined>()
   const [lensHandle, setLensHandle] = useState<string>('')
   const [step, setStep] = useState(STEPS.ANIMATE)
+  const [isMinting, setIsMinting] = useState(false)
 
   const tokenboundClient = new TokenboundClient({
     chainId: mainnet.id,
@@ -67,19 +77,6 @@ export default function MintPage() {
     getNFTs()
   }, [address])
 
-  const { data } = useSimulateContract({
-    functionName: 'mint',
-    args: [address],
-    address: '0x21e37BF33e0c4227200fC5080af5a62DD802087F',
-    abi: pfpassportAbi,
-  })
-
-  const { writeContract } = useWriteContract({
-    mutation: {
-      onSuccess: onTransactionSubmitted,
-    },
-  })
-
   const onBack = useCallback(() => {
     setStep((value) => value - 1)
   }, [])
@@ -91,14 +88,38 @@ export default function MintPage() {
     setStep((value) => value + 1)
   }, [])
 
-  const onSubmit = useCallback(async () => {
-    if (step !== STEPS.PASSPORT) {
-      return onNext()
-    }
+  const mintPassport = async () => {
+    setIsMinting(true)
+    await useHandleWrongNetwork()
 
-    writeContract(data?.request!)
-    return onNext()
-  }, [step, onNext])
+    try {
+      // @ts-ignore
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+
+      const pfpassportContract = new ethers.Contract(
+        PFPASSPORT_TESTNET_CONTRACT_ADDRESS,
+        pfpassportAbi,
+        signer
+      ) as Pfpassport
+
+      await mintPFPassportWithMintingFee(
+        pfpassportContract,
+        signer,
+        signer,
+        tokenAccount,
+        PFPASSPORT_TOKEN_URI
+      )
+
+      toast({
+        title: 'Your PFPassport has been successfully minted',
+      })
+      setIsMinting(false)
+      onNext()
+    } catch {
+      setIsMinting(false)
+    }
+  }
 
   const actionLabel = useMemo(() => {
     if (step === STEPS.PASSPORT) {
@@ -218,8 +239,14 @@ export default function MintPage() {
                 </span>
               </Button>
 
-              <Button type="submit" className="min-w-[30%]" onClick={onSubmit}>
+              <Button
+                type="button"
+                className="min-w-[30%]"
+                onClick={mintPassport}
+                disabled={isMinting}
+              >
                 <span className="font-extrabold italic text-foreground text-2xl">
+                  {isMinting ? 'Minting...' : ''}
                   {actionLabel}
                 </span>
               </Button>

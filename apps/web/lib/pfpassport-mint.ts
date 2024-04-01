@@ -1,19 +1,19 @@
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { ethers } from 'ethers'
 
 import { Pfpassport } from './contracts/types'
 
 export const mintPFPassportWithMintingFee = async (
   pfPassport: Pfpassport, // TypeChain type for PFPassport contract generated from ABI
-  admin: SignerWithAddress,
-  minter: SignerWithAddress,
+  admin: ethers.providers.JsonRpcSigner,
+  minter: ethers.providers.JsonRpcSigner,
   to: string,
   tokenURI: string
 ) => {
+  const minterAddress = await minter.getAddress()
   const { v, r, s } = await ERC721_generateSignature(
     pfPassport,
     admin,
-    minter.address
+    minterAddress
   )
 
   /* 
@@ -35,13 +35,13 @@ export const mintPFPassportWithMintingFee = async (
 /**
  * Generate and sign EIP712 typed data for ERC721Token contract
  * @param erc721 PFPassport contract used
- * @param trustedAddress trustedAddress signer
+ * @param trustedAddress trustedAddress ethers.providers.JsonRpcSigner signer
  * @param to address to mint token to
  * @returns EIP712 signature from trustedAddress
  */
 export const ERC721_generateSignature = async (
   erc721: Pfpassport,
-  trustedAddress: SignerWithAddress,
+  trustedAddress: ethers.providers.JsonRpcSigner,
   to: string
 ) => {
   const { domain, types, value } = getEIP712TypedData({
