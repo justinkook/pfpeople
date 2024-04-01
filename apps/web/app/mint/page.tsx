@@ -62,7 +62,7 @@ export default function MintPage() {
     if (nft?.contract?.address && nft?.tokenId) {
       setSelectedNft(nft)
       const account = tokenboundClient.getAccount({
-        tokenContract: nft.mint?.mintAddress as Address,
+        tokenContract: nft.contract?.address as Address,
         tokenId: nft.tokenId,
       })
       setTokenAccount(account)
