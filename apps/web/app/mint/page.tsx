@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
 import { Address, createWalletClient, custom, http, WalletClient } from 'viem'
-import { polygon, polygonMumbai } from 'viem/chains'
+import { mainnet, polygon, polygonMumbai } from 'viem/chains'
 import { useAccount, useSimulateContract, useWriteContract } from 'wagmi'
 
 import { OwnedNft } from '@/types/nfts'
@@ -52,8 +52,7 @@ export default function MintPage() {
   })
   const tokenboundClient = new TokenboundClient({
     walletClient: walletClient as any,
-    chainId:
-      process.env.NODE_ENV === 'development' ? polygonMumbai.id : polygon.id,
+    chainId: mainnet.id,
   })
 
   const [tokenAccount, setTokenAccount] = useState<string>('')
