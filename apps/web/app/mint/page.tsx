@@ -173,13 +173,18 @@ export default function MintPage() {
           <div className="flex flex-col items-center space-y-6">
             <Avatar className="animate-pulse aniamte-ping w-auto shrink-0 sm:w-[484px] h-auto sm:h-[484px] rounded-full">
               <AvatarImage
-                src={selectedNft?.contract?.openSeaMetadata?.imageUrl}
+                src={
+                  selectedNft?.image?.cachedUrl || selectedNft?.image?.pngUrl
+                }
                 width={484}
                 height={484}
                 alt="PFPeople logo image"
                 className="aspect-square w-auto sm:w-[484px] h-auto sm:h-[484px]"
               />
             </Avatar>
+            <h3 className="uppercase font-extrabold text-xl">
+              {selectedNft?.name}
+            </h3>
           </div>
           <div className="flex flex-col justify-center space-y-8">
             <div className="flex flex-col space-y-4">
