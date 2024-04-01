@@ -146,25 +146,26 @@ export default function MintPage() {
         </span>
       </div>
 
-      <div className="mt-32 flex items-center justify-center flex-wrap flex-1">
+      <div className="mt-32 w-full h-full">
         {nfts
-          .filter(
-            (nft) =>
-              !nft.contract?.isSpam && nft.contract?.openSeaMetadata?.imageUrl
-          )
-          .map((nft, index: number) => (
-            <Avatar
-              key={index}
-              className={cn(
-                'animate-[bounce_18s_ease-in-out_infinite] border-8 border-purple-500 w-[255px] h-[255px] cursor-pointer',
-                `sm:absolute sm:bottom-[${Math.round(Math.random() * 100)}px] sm:right-[${Math.round(Math.random() * 100)}px]`,
-                `animate-[bounce_${index * 4}s_ease-in-out_infinite]`
-              )}
-              onClick={() => selectNft(nft)}
-            >
-              <AvatarImage src={nft.contract?.openSeaMetadata?.imageUrl} />
-            </Avatar>
-          ))}
+          .filter((nft) => nft.contract?.openSeaMetadata?.imageUrl)
+          .map((nft, index: number) => {
+            const bottom = Math.round(Math.random() * 100) * index
+            const right = Math.round(Math.random() * 100) * index
+            return (
+              <Avatar
+                key={index}
+                className={cn(
+                  'animate-[bounce_18s_ease-in-out_infinite] border-8 border-purple-500 w-[255px] h-[255px] cursor-pointer',
+                  `sm:absolute sm:bottom-[${bottom}px] sm:right-[${right}px]`,
+                  `animate-[bounce_${index * 4}s_ease-in-out_infinite]`
+                )}
+                onClick={() => selectNft(nft)}
+              >
+                <AvatarImage src={nft.contract?.openSeaMetadata?.imageUrl} />
+              </Avatar>
+            )
+          })}
       </div>
     </div>
   )
