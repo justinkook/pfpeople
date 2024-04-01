@@ -4,8 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
-import { Address, createWalletClient, custom, http, WalletClient } from 'viem'
-import { mainnet, polygon, polygonMumbai } from 'viem/chains'
+import { Address } from 'viem'
+import { mainnet } from 'viem/chains'
 import { useAccount, useSimulateContract, useWriteContract } from 'wagmi'
 
 import { OwnedNft } from '@/types/nfts'
@@ -21,13 +21,6 @@ import { Navbar } from '@/components/navbar'
 import { PFPassport } from '@/components/pfpassport'
 import { Stepper } from '@/components/stepper'
 
-type TBAccountParams = {
-  tokenContract: `0x${string}`
-  tokenId: string
-  chainId?: number | undefined
-  salt?: number | undefined
-}
-
 enum STEPS {
   ANIMATE = 1,
   NAME = 2,
@@ -42,16 +35,7 @@ export default function MintPage() {
   const [lensHandle, setLensHandle] = useState<string>('')
   const [step, setStep] = useState(STEPS.ANIMATE)
 
-  const walletClient = createWalletClient({
-    chain: process.env.NODE_ENV === 'development' ? polygonMumbai : polygon,
-    account: address,
-    transport:
-      process.env.NODE_ENV === 'development'
-        ? http('https://polygon-mumbai-bor-rpc.publicnode.com')
-        : http('https://rpc-mainnet.matic.quiknode.pro'),
-  })
   const tokenboundClient = new TokenboundClient({
-    walletClient: walletClient as any,
     chainId: mainnet.id,
   })
 
