@@ -62,7 +62,7 @@ export default function MintPage() {
     if (nft?.contract?.address && nft?.tokenId) {
       setSelectedNft(nft)
       const account = tokenboundClient.getAccount({
-        tokenContract: nft.contract?.address as Address,
+        tokenContract: nft.mint?.mintAddress as Address,
         tokenId: nft.tokenId,
       })
       setTokenAccount(account)
@@ -76,7 +76,10 @@ export default function MintPage() {
         return
       }
       const { ownedNfts } = await alchemy.nft.getNftsForOwner(address)
-      setNfts(ownedNfts)
+      const filteredNfts = ownedNfts.filter(
+        (e) => (e.image?.cachedUrl || e.image?.pngUrl) && e.mint?.mintAddress
+      )
+      setNfts(filteredNfts)
     }
     getNFTs()
   }, [address])
@@ -156,7 +159,7 @@ export default function MintPage() {
             )}
             onClick={() => selectNft(nft)}
           >
-            <AvatarImage src={nft.contract?.openSeaMetadata?.imageUrl} />
+            <AvatarImage src={nft.image?.cachedUrl || nft.image?.pngUrl} />
           </Avatar>
         ))}
       </div>
