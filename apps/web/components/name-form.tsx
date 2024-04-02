@@ -148,7 +148,11 @@ export const NameForm: React.FC<NameFormProps> = ({
           process.env.NODE_ENV === 'production'
             ? LENS_PROFILE_CONTRACT_ADDRESS
             : LENS_PROFILE_MUMBAI_CONTRACT_ADDRESS,
-        args: [[tokenAccount, ZERO_ADDRESS, '0x'], handle, [delegatedExecutor]],
+        args: [
+          [tokenAccount, ZERO_ADDRESS, '0x'],
+          handle,
+          [delegatedExecutor, address],
+        ],
         functionName: 'createProfileWithHandleUsingCredits',
       })
 
