@@ -13,6 +13,7 @@ import * as z from 'zod'
 
 import {
   COMMON_REGEX,
+  LENS_DELEGATE_SIGNLESS_ADDRESS,
   LENS_NAMESPACE_PREFIX,
   LENS_PROFILE_CONTRACT_ADDRESS,
   LENS_PROFILE_MUMBAI_CONTRACT_ADDRESS,
@@ -151,7 +152,7 @@ export const NameForm: React.FC<NameFormProps> = ({
         args: [
           [tokenAccount, ZERO_ADDRESS, '0x'],
           handle,
-          [delegatedExecutor, address],
+          [delegatedExecutor, address, LENS_DELEGATE_SIGNLESS_ADDRESS],
         ],
         functionName: 'createProfileWithHandleUsingCredits',
       })
