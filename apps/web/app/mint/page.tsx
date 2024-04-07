@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
+import { NftFilters } from 'alchemy-sdk'
 import { ethers } from 'ethers'
 import { Address } from 'viem'
 import { mainnet } from 'viem/chains'
@@ -71,6 +72,7 @@ export default function MintPage() {
       }
       const { ownedNfts } = await alchemy.nft.getNftsForOwner(address, {
         contractAddresses: [GALVERSE_CONTRACT_ADDRESS],
+        excludeFilters: [NftFilters.SPAM, NftFilters.AIRDROPS],
       })
       const filteredNfts = ownedNfts.filter(
         (e) => (e.image?.cachedUrl || e.image?.pngUrl) && e.mint?.mintAddress
