@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowDownIcon } from '@radix-ui/react-icons'
 import { TokenboundClient } from '@tokenbound/sdk'
 import { NftFilters } from 'alchemy-sdk'
@@ -296,10 +297,10 @@ export default function MintPage() {
 
               <span className="text-center font-semibold text-xl text-muted-foreground max-w-[553px] m-auto">
                 Your profile keeps track of all your onchain relationships. Go
-                follow some other PFPeople!
+                follow some other PFPeople! Also check out your new profile on
+                TokenBound!
               </span>
 
-              <PFPassport width={430} height={430} />
               <div>
                 <h1 className="max-w-[712px] text-center block uppercase font-extrabold text-3xl m-auto">
                   Here's a list of places to start your journey
@@ -309,35 +310,85 @@ export default function MintPage() {
               <ArrowDownIcon className="w-8 h-8 m-auto text-primary" />
 
               <div className="flex flex-wrap space-y-4 sm:space-y-0 items-center justify-center m-auto sm:space-x-4">
-                <Button variant="secondary" className="h-[96px] w-[244px]">
-                  <Image
-                    src="/images/hey-logo.png"
-                    width={60}
-                    height={60}
-                    className="mr-4"
-                    alt="hey.xyz logo"
-                  />{' '}
-                  <span className="font-extrabold text-2xl">hey.xyz</span>
+                <Button
+                  variant="secondary"
+                  className="h-[96px] w-[244px]"
+                  asChild
+                >
+                  <Link
+                    href={`https://tokenbound.org/assets/ethereum/${selectedNft?.contract?.address}/${selectedNft?.tokenId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="https://tokenbound.org/_next/image?url=%2Ftb-mark.svg&w=96&q=75"
+                      width={60}
+                      height={60}
+                      className="mr-4"
+                      alt="TokenBound.org logo"
+                    />{' '}
+                    <span className="font-extrabold text-2xl">TokenBound</span>
+                  </Link>
                 </Button>
-                <Button variant="secondary" className="h-[96px] w-[244px]">
-                  <Image
-                    src="/images/orb-logo.png"
-                    width={60}
-                    height={60}
-                    className="mr-4"
-                    alt="orb.ac logo"
-                  />
-                  <span className="font-extrabold text-2xl">orb.ac</span>
+                <Button
+                  variant="secondary"
+                  className="h-[96px] w-[244px]"
+                  asChild
+                >
+                  <Link
+                    href="https://hey.xyz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="/images/hey-logo.png"
+                      width={60}
+                      height={60}
+                      className="mr-4"
+                      alt="hey.xyz logo"
+                    />{' '}
+                    <span className="font-extrabold text-2xl">hey.xyz</span>
+                  </Link>
                 </Button>
-                <Button variant="secondary" className="h-[96px] w-[244px]">
-                  <Image
-                    src="/images/buttrfly-logo.png"
-                    width={60}
-                    height={60}
-                    className="mr-4"
-                    alt="buttrfly logo"
-                  />
-                  <span className="font-extrabold text-2xl">Buttrfly</span>
+                <Button
+                  variant="secondary"
+                  className="h-[96px] w-[244px]"
+                  asChild
+                >
+                  <Link
+                    href="https://orb.ac"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="/images/orb-logo.png"
+                      width={60}
+                      height={60}
+                      className="mr-4"
+                      alt="orb.ac logo"
+                    />
+                    <span className="font-extrabold text-2xl">orb.ac</span>
+                  </Link>
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="h-[96px] w-[244px]"
+                  asChild
+                >
+                  <Link
+                    href="https://buttrfly.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="/images/buttrfly-logo.png"
+                      width={60}
+                      height={60}
+                      className="mr-4"
+                      alt="buttrfly logo"
+                    />
+                    <span className="font-extrabold text-2xl">Buttrfly</span>
+                  </Link>
                 </Button>
               </div>
               <div>
