@@ -12,6 +12,7 @@ import { useAccount } from 'wagmi'
 import { OwnedNft } from '@/types/nfts'
 import { alchemy } from '@/lib/alchemy'
 import {
+  GALVERSE_CONTRACT_ADDRESS,
   PFPASSPORT_TESTNET_CONTRACT_ADDRESS,
   PFPASSPORT_TOKEN_URI,
 } from '@/lib/constants'
@@ -68,7 +69,9 @@ export default function MintPage() {
       if (!address) {
         return
       }
-      const { ownedNfts } = await alchemy.nft.getNftsForOwner(address)
+      const { ownedNfts } = await alchemy.nft.getNftsForOwner(address, {
+        contractAddresses: [GALVERSE_CONTRACT_ADDRESS],
+      })
       const filteredNfts = ownedNfts.filter(
         (e) => (e.image?.cachedUrl || e.image?.pngUrl) && e.mint?.mintAddress
       )
@@ -84,6 +87,9 @@ export default function MintPage() {
   const onNext = useCallback((handle?: string) => {
     if (handle) {
       setLensHandle(handle)
+    }
+    if (step === STEPS.NAME) {
+      setStep(STEPS.SUCCESS)
     }
     setStep((value) => value + 1)
   }, [])

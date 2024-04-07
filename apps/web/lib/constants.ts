@@ -13,6 +13,9 @@ export const PFPASSPORT_TESTNET_CONTRACT_ADDRESS =
 export const PFPASSPORT_TOKEN_URI =
   'https://bafkreigx4kyelbk7rh2vkcpit66mgdrkflvbmsktstoooi7n2tre26pvfu.ipfs.nftstorage.link/'
 
+export const GALVERSE_CONTRACT_ADDRESS =
+  '0x582048C4077a34E7c3799962F1F8C5342a3F4b12'
+
 export const COMMON_REGEX = {
   ZORA: /https:\/\/(?:testnet\.)?zora\.co\/collect\/(eth|oeth|base|zora|gor|ogor|basegor|zgor):(0x[\dA-Fa-f]{40})((?:\/(\d+))?|$)/,
   URL: /\b(http|https):\/\/([\p{L}\p{N}_-]+(?:(?:\.[\p{L}\p{N}_-]+)+))([\p{L}\p{N}_.,@?^=%&:\/~+#-]*[\p{L}\p{N}_@?^=%&\/~+#-])/gu,
