@@ -72,7 +72,6 @@ export default function MintPage() {
       }
       const { ownedNfts } = await alchemy.nft.getNftsForOwner(address, {
         contractAddresses: [GALVERSE_CONTRACT_ADDRESS],
-        excludeFilters: [NftFilters.SPAM, NftFilters.AIRDROPS],
       })
       const filteredNfts = ownedNfts.filter(
         (e) => (e.image?.cachedUrl || e.image?.pngUrl) && e.mint?.mintAddress
