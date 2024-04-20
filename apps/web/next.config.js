@@ -2,7 +2,16 @@
 const nextConfig = {
   transpilePackages: ['@pfpeople/lens'],
   images: {
-    domains: ['media.giphy.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media.giphy.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'tokenbound.org',
+      },
+    ],
   },
   webpack: (config, context) => {
     if (!context.isServer) {

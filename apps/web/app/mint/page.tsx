@@ -95,6 +95,7 @@ export default function MintPage() {
     }
     if (step === STEPS.NAME) {
       setStep(STEPS.SUCCESS)
+      return
     }
     setStep((value) => value + 1)
   }, [])
@@ -321,12 +322,12 @@ export default function MintPage() {
                     rel="noopener noreferrer"
                   >
                     <Image
-                      src="https://tokenbound.org/_next/image?url=%2Ftb-mark.svg&w=96&q=75"
+                      src="https://tokenbound.org/tb-mark.svg"
                       width={60}
                       height={60}
-                      className="mr-4"
+                      className="mr-4 bg-white rounded-lg p-1"
                       alt="TokenBound.org logo"
-                    />{' '}
+                    />
                     <span className="font-extrabold text-2xl">TokenBound</span>
                   </Link>
                 </Button>
