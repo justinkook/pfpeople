@@ -62,7 +62,7 @@ export default function Home() {
 
       {address && (
         <Button className="italic uppercase text-xl font-extrabold">
-          <Link href="/mint">Mint</Link>
+          <Link href="/mint">Enter</Link>
         </Button>
       )}
 

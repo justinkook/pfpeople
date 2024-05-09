@@ -90,8 +90,6 @@ export default function MintPage() {
   const onNext = useCallback((handle?: string) => {
     if (handle) {
       setLensHandle(handle)
-    }
-    if (step === STEPS.NAME) {
       setStep(STEPS.SUCCESS)
       return
     }
