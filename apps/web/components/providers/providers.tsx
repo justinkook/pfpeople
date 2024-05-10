@@ -2,6 +2,7 @@
 
 import { apolloClient, ApolloProvider } from '@pfpeople/lens/apollo'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Analytics } from '@vercel/analytics/react'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import { createConfig, WagmiProvider } from 'wagmi'
 import {
@@ -49,6 +50,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
           </QueryClientProvider>
         </ApolloProvider>
       </WagmiProvider>
+      <Analytics />
     </ThemeProvider>
   )
 }
